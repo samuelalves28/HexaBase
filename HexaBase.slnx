@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/HexaBase.Api/HexaBase.Api.csproj" />
+    <Project Path="src/HexaBase.Application/HexaBase.Application.csproj" />
+    <Project Path="src/HexaBase.Domain/HexaBase.Domain.csproj" />
+    <Project Path="src/HexaBase.Infrastructure/HexaBase.Infrastructure.csproj" />
+  </Folder>
+</Solution>

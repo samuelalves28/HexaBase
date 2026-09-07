@@ -1,0 +1,6 @@
+@HexaBase.Api_HostAddress = http://localhost:5230
+
+GET {{HexaBase.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
