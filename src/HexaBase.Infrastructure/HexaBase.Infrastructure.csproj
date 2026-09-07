@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <ProjectReference Include="..\HexaBase.Application\HexaBase.Application.csproj" />
     <ProjectReference Include="..\HexaBase.Domain\HexaBase.Domain.csproj" />
   </ItemGroup>
