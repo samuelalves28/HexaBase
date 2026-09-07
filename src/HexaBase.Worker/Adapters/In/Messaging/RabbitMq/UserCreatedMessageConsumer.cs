@@ -10,28 +10,17 @@ using RabbitMQ.Client.Events;
 
 namespace HexaBase.Worker.Adapters.In.Messaging.RabbitMq;
 
-public sealed class UserCreatedMessageConsumer : BackgroundService
+public sealed class UserCreatedMessageConsumer(
+    IConnection connection,
+    IServiceScopeFactory serviceScopeFactory,
+    IOptions<RabbitMqOptions> options,
+    ILogger<UserCreatedMessageConsumer> logger) : BackgroundService
 {
-    private readonly IConnection _connection;
-    private readonly IServiceScopeFactory _serviceScopeFactory;
-    private readonly RabbitMqOptions _options;
-    private readonly ILogger<UserCreatedMessageConsumer> _logger;
-
-    public UserCreatedMessageConsumer(
-        IConnection connection,
-        IServiceScopeFactory serviceScopeFactory,
-        IOptions<RabbitMqOptions> options,
-        ILogger<UserCreatedMessageConsumer> logger)
-    {
-        _connection = connection;
-        _serviceScopeFactory = serviceScopeFactory;
-        _options = options.Value;
-        _logger = logger;
-    }
+    private readonly RabbitMqOptions _options = options.Value;
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        using var channel = _connection.CreateModel();
+        using var channel = connection.CreateModel();
 
         channel.ExchangeDeclare(
             exchange: _options.ExchangeName,
@@ -67,7 +56,7 @@ public sealed class UserCreatedMessageConsumer : BackgroundService
                     return;
                 }
 
-                using var scope = _serviceScopeFactory.CreateScope();
+                using var scope = serviceScopeFactory.CreateScope();
                 var emailService = scope.ServiceProvider.GetRequiredService<IEmailService>();
 
                 await emailService.SendUserCreatedAsync(
@@ -77,12 +66,12 @@ public sealed class UserCreatedMessageConsumer : BackgroundService
                     stoppingToken);
 
                 channel.BasicAck(args.DeliveryTag, false);
-                _logger.LogInformation("E-mail enviado com sucesso para {Email}.", message.Email);
+                logger.LogInformation("E-mail enviado com sucesso para {Email}.", message.Email);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Falha ao processar mensagem de criação de usuário.");
-                channel.BasicNack(args.DeliveryTag, false, true);
+                logger.LogError(ex, "Falha ao processar mensagem de criação de usuário.");
+                channel.BasicNack(args.DeliveryTag, false, false);
             }
         };
 

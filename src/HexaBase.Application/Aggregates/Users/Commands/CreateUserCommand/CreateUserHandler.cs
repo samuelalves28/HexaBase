@@ -8,22 +8,11 @@ using MediatR;
 
 namespace HexaBase.Application.Aggregates.Users.Commands.CreateUserCommand;
 
-public sealed class CreateUserHandler : IRequestHandler<CreateUserCommand, Guid>
+public sealed class CreateUserHandler(
+    IUserRepository userRepository,
+    IPasswordHasher passwordHasher,
+    IUserCreatedPublisher userCreatedPublisher) : IRequestHandler<CreateUserCommand, Guid>
 {
-    private readonly IUserRepository _userRepository;
-    private readonly IPasswordHasher _passwordHasher;
-    private readonly IUserCreatedPublisher _userCreatedPublisher;
-
-    public CreateUserHandler(
-        IUserRepository userRepository,
-        IPasswordHasher passwordHasher,
-        IUserCreatedPublisher userCreatedPublisher)
-    {
-        _userRepository = userRepository;
-        _passwordHasher = passwordHasher;
-        _userCreatedPublisher = userCreatedPublisher;
-    }
-
     public async Task<Guid> Handle(
         CreateUserCommand request,
         CancellationToken cancellationToken)
@@ -34,13 +23,13 @@ public sealed class CreateUserHandler : IRequestHandler<CreateUserCommand, Guid>
         var user = new User(
             request.Name.Trim(),
             request.Email.Trim().ToLowerInvariant(),
-            _passwordHasher.Hash(temporaryPassword));
+            passwordHasher.Hash(temporaryPassword));
 
-        await _userRepository.CreateAsync(
+        await userRepository.CreateAsync(
             user,
             cancellationToken);
 
-        await _userCreatedPublisher.PublishAsync(
+        await userCreatedPublisher.PublishAsync(
             new UserCreatedMessage(
                 user.PublicId,
                 user.Name,

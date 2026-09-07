@@ -5,14 +5,9 @@ using Microsoft.Extensions.Options;
 
 namespace HexaBase.Worker.Adapters.Out.Email.Smtp;
 
-public sealed class SmtpEmailService : IEmailService
+public sealed class SmtpEmailService(IOptions<SmtpOptions> options) : IEmailService
 {
-    private readonly SmtpOptions _options;
-
-    public SmtpEmailService(IOptions<SmtpOptions> options)
-    {
-        _options = options.Value;
-    }
+    private readonly SmtpOptions _options = options.Value;
 
     public async Task SendUserCreatedAsync(
         string email,

@@ -19,7 +19,7 @@ public sealed class UsersController : ControllerBase
 
     [HttpPost]
     public async Task<IActionResult> Create(
-        [FromBody] CreateUserRequest request,
+        CreateUserRequestDTO request,
         CancellationToken cancellationToken)
     {
         var publicId = await _sender.Send(
