@@ -5,15 +5,8 @@ using HexaBase.Application.Shared.Services.Cep;
 
 namespace HexaBase.Infrastructure.Adapters.Out.External.Cep;
 
-public sealed class ViaCepService : IViaCepService
+public sealed class ViaCepService(HttpClient httpClient) : IViaCepService
 {
-    private readonly HttpClient _httpClient;
-
-    public ViaCepService(HttpClient httpClient)
-    {
-        _httpClient = httpClient;
-    }
-
     public async Task<ViaCepAddress?> GetByCepAsync(
         string cep,
         CancellationToken cancellationToken)
@@ -26,7 +19,7 @@ public sealed class ViaCepService : IViaCepService
 
         try
         {
-            var response = await _httpClient.GetFromJsonAsync<ViaCepResponseDto>(
+            var response = await httpClient.GetFromJsonAsync<ViaCepResponseDto>(
                 $"{normalizedCep}/json/",
                 cancellationToken);
 

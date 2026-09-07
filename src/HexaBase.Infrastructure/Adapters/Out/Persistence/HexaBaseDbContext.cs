@@ -4,13 +4,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HexaBase.Infrastructure.Adapters.Out.Persistence;
 
-public sealed class HexaBaseDbContext : DbContext
+public sealed class HexaBaseDbContext(DbContextOptions<HexaBaseDbContext> options) : DbContext(options)
 {
-    public HexaBaseDbContext(DbContextOptions<HexaBaseDbContext> options)
-        : base(options)
-    {
-    }
-
     public DbSet<User> Users => Set<User>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
