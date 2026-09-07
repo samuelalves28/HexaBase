@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/src/HexaBase.Api/appsettings.Development.json
+/src/HexaBase.Api/appsettings.json
+/src/HexaBase.Worker/appsettings.Development.json
+/src/HexaBase.Worker/appsettings.json

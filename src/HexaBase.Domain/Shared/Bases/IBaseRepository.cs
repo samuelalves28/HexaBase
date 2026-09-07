@@ -3,7 +3,7 @@
 public interface IBaseRepository<TModel>
 {
     Task<TModel?> GetByIdAsync(int id, CancellationToken cancellation);
-    Task<TModel> GetByPublicIdAsync(Guid publicId, CancellationToken cancellation);
+    Task<TModel?> GetByPublicIdAsync(Guid publicId, CancellationToken cancellation);
     Task<List<TModel>> GetByPublicIdsAsync(List<Guid> publicIds, CancellationToken cancellation);
     Task CreateAsync(TModel model, CancellationToken cancellation);
     Task CreateAsync(List<TModel> model, CancellationToken cancellation);
