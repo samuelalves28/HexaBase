@@ -3,7 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using HexaBase.Application.Shared.Services.Cep;
 
-namespace HexaBase.Infrastructure.Adapters.Out.External.Cep;
+namespace HexaBase.Infrastructure.Adapters.Cep;
 
 public sealed class ViaCepService(HttpClient httpClient) : IViaCepService
 {

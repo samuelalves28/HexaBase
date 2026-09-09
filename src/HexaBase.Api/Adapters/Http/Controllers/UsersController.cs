@@ -1,10 +1,10 @@
-using HexaBase.Api.Adapters.In.Http.DTOs;
+using HexaBase.Api.Adapters.Http.DTOs;
 using HexaBase.Application.Aggregates.Users.Commands.CreateUserCommand;
 using HexaBase.Application.Aggregates.Users.Queries.GetUserByPublicIdQuery;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HexaBase.Api.Adapters.In.Http.Controllers;
+namespace HexaBase.Api.Adapters.Http.Controllers;
 
 [ApiController]
 [Route("api/users")]

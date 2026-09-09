@@ -1,4 +1,4 @@
-namespace HexaBase.Infrastructure.Adapters.Out.Messaging.RabbitMq;
+namespace HexaBase.Infrastructure.Adapters.Messaging.RabbitMq;
 
 public sealed class RabbitMqOptions
 {

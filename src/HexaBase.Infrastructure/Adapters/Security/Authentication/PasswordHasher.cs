@@ -1,7 +1,7 @@
 using HexaBase.Application.Shared.Services.Authentication;
 using Microsoft.AspNetCore.Identity;
 
-namespace HexaBase.Infrastructure.Adapters.Out.Security.Authentication;
+namespace HexaBase.Infrastructure.Adapters.Security.Authentication;
 
 public class PasswordHasher : IPasswordHasher
 {

@@ -1,4 +1,4 @@
-namespace HexaBase.Api.Adapters.In.Http.DTOs;
+namespace HexaBase.Api.Adapters.Http.DTOs;
 
 public sealed record GetUserResponse(
     Guid PublicId,
